@@ -1,26 +1,11 @@
-package com.sofka.back.models;
+package com.sofka.back.dtos;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+public class BookDto {
 
-@Entity
-@Table(name = "book")
-public class Book {
-
-    @Id
-    @Column(unique = true, nullable = false)
     private String isbn;
-
-    @NotNull(message = "el nombre es obligatorio")
     private String name;
-    @NotNull(message = "la descripcion es obligatorio")
     private String description;
-    @NotNull(message = "el autor es obligatorio")
     private String author;
-    @NotNull(message = "la ruta del libro es obligatorio")
     private String path;
 
     public String getIsbn() {
