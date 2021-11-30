@@ -1,5 +1,5 @@
 
-const HOST_API = "https://localhost:3001/"
+const HOST_API = "http://localhost:3001/"
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
     findAll: async (id) =>{

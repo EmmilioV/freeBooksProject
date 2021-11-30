@@ -10,6 +10,7 @@ const Login = () => {
         formState: { errors }
     } = useForm();
     const [user, setUser] = useState({ username: "", password: "" });
+    const [users, setUsers] = useState({})
 
     const handleChange = (event) => {
       setUser({
@@ -20,10 +21,22 @@ const Login = () => {
         ...user,
         [event.target.password]: event.target.value,
       });
+      console.log(user);
     };
 
-    const onSubmit =  async (data, e) =>{
-      await ApiUser.findAll()
+    const validateUser = (users) =>{
+      users.map((element) =>{
+        if(user.username === element.username && user.password === element.password){
+          return true
+        }
+        return false
+      })
+    }
+
+    const onSubmit = () =>{
+      setUsers(ApiUser.findAll())
+      
+      console.log(users);
     }
 
   return (
