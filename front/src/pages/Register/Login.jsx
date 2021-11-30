@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import { useForm } from "react-hook-form";
+import ApiUser from "../../Components/Api/ApiUser";
 
 const Login = () => {
 
@@ -8,10 +9,21 @@ const Login = () => {
         handleSubmit,
         formState: { errors }
     } = useForm();
+    const [user, setUser] = useState({ username: "", password: "" });
 
-    const onSubmit = (data, e) =>{
-        console.log(data);
-        e.target.reset();
+    const handleChange = (event) => {
+      setUser({
+        ...user,
+        [event.target.username]: event.target.value,
+      });
+      setUser({
+        ...user,
+        [event.target.password]: event.target.value,
+      });
+    };
+
+    const onSubmit =  async (data, e) =>{
+      await ApiUser.findAll()
     }
 
   return (
@@ -26,7 +38,8 @@ const Login = () => {
               value: true,
               message: "Campo requerido",
             },
-          })}/>
+          })}
+          onChange={handleChange}/>
         <div className="text-danger">{errors?.username?.message}</div>
       </div>
       <div className="mb-4">
@@ -39,7 +52,8 @@ const Login = () => {
               value: true,
               message: "Campo requerido",
             },
-          })}/>
+          })}
+          onChange={handleChange}/>
         <div className="text-danger">{errors?.password?.message}</div>
       </div>
       <a href="/register">¿Aun no estas registrado?</a>
