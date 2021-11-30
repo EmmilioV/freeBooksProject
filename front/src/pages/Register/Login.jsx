@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { useForm } from "react-hook-form";
 import ApiUser from "../../Components/Api/ApiUser";
 
@@ -10,7 +10,7 @@ const Login = () => {
         formState: { errors }
     } = useForm();
     const [user, setUser] = useState({ username: "", password: "" });
-    const [users, setUsers] = useState({})
+    const [users, setUsers] = useState([])
 
     const handleChange = (event) => {
       setUser({
@@ -34,7 +34,6 @@ const Login = () => {
     }
 
     const onSubmit = () =>{
-      setUsers(ApiUser.findAll())
       
       console.log(users);
     }

@@ -2,7 +2,7 @@
 const HOST_API = "http://localhost:3001/"
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-    findAll: async (id) =>{
+    findAll: async () =>{
         return fetch(HOST_API+ "usuarios").catch((error) =>
             console.error("Error: ", error)
         )

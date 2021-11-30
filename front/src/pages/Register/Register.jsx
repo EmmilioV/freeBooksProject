@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import ApiUser from "../../Components/Api/ApiUser"
 
 const Register = () => {
   const {
@@ -16,7 +15,6 @@ const Register = () => {
       ...user,
       [event.target.username]: event.target.value,
     });
-    ApiUser.findAll()
   };
 
   const saveUser = (e) => {
