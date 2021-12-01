@@ -2,6 +2,13 @@ import React, { Fragment } from "react";
 import logo from "../../Img/book.png";
 
 const Navbar = () => {
+  
+  const deleteCookie = () => {
+    let now = new Date (0); 
+    let expireTime = now.getTime(); 
+    now.setTime(expireTime); 
+    document.cookie =document.cookie+';expires='+now.toUTCString()+';path=/';   
+  };
 
   return (
     <Fragment>
@@ -9,7 +16,7 @@ const Navbar = () => {
         <div className="container-fluid">
           <a className="navbar-brand" href="/home">
             <img src={logo} alt="" width="50" height="50" />
-                Biblioteca
+            FreeBooksProject
           </a>
           <button
             className="navbar-toggler"
@@ -33,7 +40,17 @@ const Navbar = () => {
                 <a
                   className="nav-link active"
                   aria-current="page"
+                  href="/users"
+                >
+                  Administrar usuarios
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  className="nav-link active"
+                  aria-current="page"
                   href="/"
+                  onClick={deleteCookie}
                 >
                   Salir
                 </a>

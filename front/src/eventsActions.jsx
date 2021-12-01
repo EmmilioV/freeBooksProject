@@ -22,6 +22,19 @@ export default {
   }),
   updateUser: (id, user) => ({
     type: TYPE.USER_UPDATE, id, user
+  }),
+  
+  findBook: (books) => ({
+    type: TYPE.BOOK_FIND, books
+  }),
+  saveBook: (book) => ({
+    type: TYPE.BOOK_CREATE, book
+  }),
+  deleteBook: (id) => ({
+    type: TYPE.BOOK_DELETE, id
+  }),
+  updateBook: (id, book) => ({
+    type: TYPE.BOOK_UPDATE, id, book
   })
   
 };

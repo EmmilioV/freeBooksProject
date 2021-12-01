@@ -34,7 +34,6 @@ const Login = () => {
         setAccessDenied(false)
         if (username === element.username && password === element.password) {
           cookies.set("id", element.id, {path:"/"})
-          cookies.set("nombre", username, {path:"/"})
           window.location.href="/home"
         }
           setAccessDenied(true)

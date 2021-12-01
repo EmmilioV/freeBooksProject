@@ -1,3 +1,4 @@
+
 import React, { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import store from "../../store";
@@ -30,7 +31,7 @@ const Register = () => {
 
   const validateName = () => {
     users.elements.map((element) => {
-      if (username == element.username) {
+      if (username === element.username) {
         setNameDenied(true);
       }
     });
