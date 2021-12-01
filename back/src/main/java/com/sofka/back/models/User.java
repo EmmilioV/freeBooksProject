@@ -1,9 +1,5 @@
 package com.sofka.back.models;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.bind.DefaultValue;
-import org.springframework.context.annotation.Primary;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
