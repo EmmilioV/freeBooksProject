@@ -27,7 +27,6 @@ const Login = () => {
           });
         }
       });
-      const listUser = users
     }, [dispatch]);
 
     const onSubmit = () =>{
@@ -49,6 +48,7 @@ const Login = () => {
           Usuario
         </label>
         <input type="text" className="form-control" id="username" 
+        placeholder="Ingrese el usuario"
         {...register("username", {
             required: {
               value: true,
@@ -63,6 +63,7 @@ const Login = () => {
           Contraseña
         </label>
         <input type="password" className="form-control" id="password" 
+        placeholder="Ingrese la contraseña"
         {...register("password", {
             required: {
               value: true,

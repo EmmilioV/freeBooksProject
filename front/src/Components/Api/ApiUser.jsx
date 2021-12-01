@@ -6,12 +6,7 @@ export default {
       console.error("Error: ", error)
     );
   },
-  findById: async (id) => {
-    return fetch(HOST_API + "usuarios/" + id).catch((error) =>
-      console.error("Error: ", error)
-    );
-  },
-  save: async (id, request) => {
+  save: async (request) => {
     return fetch(HOST_API, {
       method: "POST",
       body: JSON.stringify(request),
