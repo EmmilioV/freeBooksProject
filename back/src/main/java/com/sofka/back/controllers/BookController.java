@@ -28,4 +28,13 @@ public class BookController {
     public BookDto getBookByName(@PathVariable("name") String name){
         return bookService.getBookByName(name);
     }
+
+    @DeleteMapping(value = "api/idAdmin/book/{idBook}")
+    public String deleteBookById(@PathVariable("idBook") String idBook){
+        String message = bookService.deleteBook(idBook);
+
+        if(message.equals("deleted"))
+            return "Libro borrado con exito";
+        return "Hubo un problema: " + message;
+    }
 }

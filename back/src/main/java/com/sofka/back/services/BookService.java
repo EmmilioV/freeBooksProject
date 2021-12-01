@@ -39,6 +39,18 @@ public class BookService {
         return convertToBookDTO(book);
     }
 
+    public String deleteBook(String id){
+        if(bookRepository.findById(id).isEmpty())
+            return "El libro no existe en la base de datos";
+        try
+        {
+            bookRepository.deleteById(id);
+            return  "deleted";
+        }catch (Exception e){
+            return e.getMessage();
+        }
+    }
+
     private Book convertToBook(BookDto bookDto){
         book = new Book();
 
@@ -62,4 +74,5 @@ public class BookService {
 
         return bookDto;
     }
+
 }
