@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 @RestController
 public class BookController {
@@ -22,6 +23,11 @@ public class BookController {
     @GetMapping(value = "api/books")
     public ArrayList<BookDto> getBooks(){
         return bookService.getAllBooks();
+    }
+
+    @GetMapping(value = "api/books/{criteria}")
+    public ArrayList<BookDto> searchBooks(@PathVariable("criteria") String criteria){
+        return bookService.searchBooks(criteria.toLowerCase());
     }
 
     @GetMapping(value = "api/book/{name}")

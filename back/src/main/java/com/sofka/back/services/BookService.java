@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Optional;
 
 @Service
@@ -28,6 +29,18 @@ public class BookService {
 
         for (Book bookModel: bookRepository.findAll()) {
             booksDto.add(convertToBookDTO(bookModel));
+        }
+
+        return booksDto;
+    }
+
+    public ArrayList<BookDto> searchBooks(String criteria){
+        ArrayList<BookDto> booksDto = new ArrayList<>();
+        String bookName;
+        for (Book bookModel: bookRepository.findAll()) {
+            bookName = bookModel.getName().toLowerCase();
+            if(bookName.contains(criteria))
+                booksDto.add(convertToBookDTO(bookModel));
         }
 
         return booksDto;
