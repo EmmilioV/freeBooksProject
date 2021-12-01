@@ -67,7 +67,9 @@ public class BookService {
     private Book convertToBook(BookDto bookDto){
         book = new Book();
 
-        book.setIsbn(bookDto.getIsbn());
+        if(!bookDto.getIsbn().isEmpty() || bookDto.getIsbn()!=null)
+            book.setIsbn(bookDto.getIsbn());
+
         book.setName(bookDto.getName());
         book.setDescription(bookDto.getDescription());
         book.setAuthor(bookDto.getAuthor());

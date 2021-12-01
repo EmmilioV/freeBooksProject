@@ -20,6 +20,13 @@ public class BookController {
         return bookService.save(bookDto);
     }
 
+    @PutMapping(value = "api/idAdmin/book/{idBook}")
+    public BookDto editBook(@RequestBody BookDto bookDto, @PathVariable("idBook") String idBook) {
+        if(idBook.equals(bookDto.getIsbn()))
+            return bookService.save(bookDto);
+        return bookDto;
+    }
+
     @GetMapping(value = "api/books")
     public ArrayList<BookDto> getBooks(){
         return bookService.getAllBooks();
