@@ -1,17 +1,14 @@
 package com.sofka.back.models;
 
-import org.springframework.lang.Nullable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 
 @Entity
 @Table(name = "book")
-public class book {
+public class Book {
 
     @Id
     @Column(unique = true, nullable = false)
