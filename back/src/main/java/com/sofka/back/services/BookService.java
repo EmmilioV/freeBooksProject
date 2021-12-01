@@ -3,11 +3,13 @@ package com.sofka.back.services;
 import com.sofka.back.dtos.BookDto;
 import com.sofka.back.models.Book;
 import com.sofka.back.repositories.BookRepository;
+import org.hibernate.annotations.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Optional;
 
 @Service
 public class BookService {
@@ -29,6 +31,12 @@ public class BookService {
         }
 
         return booksDto;
+    }
+
+    public BookDto getBookByName(String name){
+         book = bookRepository.findByName(name).orElse(null);
+        assert book != null;
+        return convertToBookDTO(book);
     }
 
     private Book convertToBook(BookDto bookDto){
