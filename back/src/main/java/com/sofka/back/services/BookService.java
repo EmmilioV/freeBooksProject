@@ -6,6 +6,9 @@ import com.sofka.back.repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 @Service
 public class BookService {
 
@@ -16,6 +19,16 @@ public class BookService {
     public BookDto save(BookDto bookDto){
         book = convertToBook(bookDto);
         return convertToBookDTO(bookRepository.save(book));
+    }
+
+    public ArrayList<BookDto> getAllBooks(){
+        ArrayList<BookDto> booksDto = new ArrayList<>();
+
+        for (Book bookModel: bookRepository.findAll()) {
+            booksDto.add(convertToBookDTO(bookModel));
+        }
+
+        return booksDto;
     }
 
     private Book convertToBook(BookDto bookDto){
