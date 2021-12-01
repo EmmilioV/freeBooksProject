@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import ApiUser from "../../Components/Api/ApiUser";
 import event from "../../eventsActions";
 import store from "../../store";
-import md5 from "md5"
+import Cookies from "universal-cookie"
 
 
 const Login = () => {
@@ -15,6 +15,8 @@ const Login = () => {
     const [username, setUsername] = useState()
     const [password, setPassword] = useState()
     const {state:{users}, dispatch} = useContext(store)
+    const cookies = new Cookies()
+    const [accessDenied, setAccessDenied] = useState(false) 
 
 
     useEffect(() => {
@@ -22,41 +24,22 @@ const Login = () => {
         if (response.ok) {
           response.json().then((users) => {
             dispatch(event.findUser(users));
-            console.log("users"+ users);
-            console.log("users, elem"+ users.elements);
-            console.log("response: "+ response);
           });
         }
       });
       const listUser = users
-      console.log("listUser: "+listUser);
-      console.log("listUser. elem: "+listUser.element);
-      console.log("listUser. elems: "+listUser.elements);
     }, [dispatch]);
 
-    const validateUser = (listUser) => {
-      listUser.map((element)=>{
-        if (username === element.username && md5(password === element.password)) {
-          return element.id
-        }
-      })
-    }
-
-    const login = (verified) => {
-      ApiUser.findById(verified).then(response =>{
-        console.log(response.data);
-      })
-      .catch(error =>{
-        console.log(error);
-      })
-    }
-
     const onSubmit = () =>{
-      // eslint-disable-next-line array-callback-return
-      // const verified = validateUser(listUser)
-      // login(verified)
-      const listUser = users
-      console.log(listUser);
+      users.elements.map((element)=>{
+        setAccessDenied(false)
+        if (username === element.username && password === element.password) {
+          cookies.set("id", element.id, {path:"/"})
+          cookies.set("nombre", username, {path:"/"})
+          window.location.href="/home"
+        }
+          setAccessDenied(true)
+      })
     }
 
   return (
@@ -85,6 +68,10 @@ const Login = () => {
               value: true,
               message: "Campo requerido",
             },
+            minLength:{
+              value: 8,
+              message: "La contraseña debe ser mayor de 8 caracteres"
+            }
           })}
           onChange={(e) =>{setPassword(e.target.value)}}/>
         <div className="text-danger">{errors?.password?.message}</div>
@@ -95,6 +82,7 @@ const Login = () => {
           Iniciar sesión
         </button>
       </div>
+      {accessDenied === true && <h5 className="text-center mt-4 text-danger">Usuario o contraseña invalido</h5>} 
     </form>
   );
 };

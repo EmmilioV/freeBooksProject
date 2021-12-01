@@ -8,18 +8,12 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const [user, setUser] = useState({ username: "", password: "" });
+  const [username, setUsername] = useState()
+  const [password, setPassword] = useState()
 
-  const handleChange = (event) => {
-    setUser({
-      ...user,
-      [event.target.username]: event.target.value,
-    });
-    console.log(user)
-  };
 
   const saveUser = (e) => {
-    console.log(user)
+    console.log()
   };
 
   return (
@@ -39,7 +33,7 @@ const Register = () => {
               message: "Campo requerido",
             },
           })}
-          onChange={handleChange}
+          
         />
         <div className="text-danger">{errors?.username?.message}</div>
       </div>
