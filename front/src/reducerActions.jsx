@@ -1,33 +1,38 @@
 import { TYPE } from "./eventsActions";
 
-export function reducerActions(state, action) {
-  switch (action.type) {
+// eslint-disable-next-line import/no-anonymous-default-export
+export default () => {
+  const action = {};
 
-    case TYPE.USER_CREATE:{
-      const users = state.users.elements;
-      users.push(action.user);
-      return { ...state, users: { elements: users } };
-    }
-    case TYPE.USER_FIND:{
-      return {...state, users:{elements: action.users}}       
-    }
-    case TYPE.USER_DELETE:{
-      const users = state.users.elements.filter((element) => {
-        return element.id !== action.idUser;
-      });
-      return { ...state, users: { elements: users } };       
-    }
-    case TYPE.USER_UPDATE:{
-      const users = state.users.elements.map((element) => {
-        if (element.id === action.user.id) {
-          return { ...state, users: action.user };
-        }
-        return element;
-      });
-      return { ...state, users: { elements: users} };  
-    }
-    
-    default:
-      return state;
-  }
-}
+  action[TYPE.USER_FIND] = (state, action) => {
+    return { ...state, users: { elements: action.users } };
+  };
+  action[TYPE.USER_FIND_BY_ID] = (state, action) => {
+    const users = state.users.elements.filter((element) => {
+      return element.id === action.id;
+    });
+    return { ...state, users: { elements: users } };
+  };
+  action[TYPE.USER_CREATE] = (state, action) => {
+    const users = state.users.elements;
+    users.push(action.user);
+    return { ...state, users: { elements: users } };
+  };
+  action[TYPE.USER_DELETE] = (state, action) => {
+    const users = state.users.elements.filter((element) => {
+      return element.id !== action.idUser;
+    });
+    return { ...state, users: { elements: users } };
+  };
+  action[TYPE.USER_UPDATE] = (state, action) => {
+    const users = state.users.elements.map((element) => {
+      if (element.id === action.user.id) {
+        return { ...state, users: action.user };
+      }
+      return element;
+    });
+    return { ...state, users: { elements: users } };
+  };
+
+  return action;
+};

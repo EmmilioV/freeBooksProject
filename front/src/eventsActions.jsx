@@ -2,6 +2,7 @@ export const TYPE = {
   USER_CREATE: "user.USER_CREATE",
   USER_UPDATE: "user.UPDATE_CREATE",
   USER_FIND: "user.USER_FIND",
+  USER_FIND_BY_ID: "user.USER_FIND_BY_ID",
   USER_DELETE: "user.USER_DELETE",
   BOOK_CREATE: "book.USER_DELETE",
   BOOK_UPDATE: "book.UPDATE_CREATE",
@@ -11,17 +12,20 @@ export const TYPE = {
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-  saveUser: (user) => ({
-    type: TYPE.USER_CREATE, user
+  findUser: (users) => ({
+    type: TYPE.USER_FIND, users
   }),
-  findUser: (user) => ({
+  findById: (id) => ({
+    type: TYPE.USER_FIND_BY_ID, id
+  }),
+  saveUser: (user) => ({
     type: TYPE.USER_CREATE, user
   }),
   deleteUser: (id) => ({
     type: TYPE.USER_DELETE, id
   }),
   updateUser: (id, user) => ({
-    type: TYPE.USER_CREATE, id, user
+    type: TYPE.USER_UPDATE, id, user
   })
   
   

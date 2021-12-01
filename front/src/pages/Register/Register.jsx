@@ -15,6 +15,7 @@ const Register = () => {
       ...user,
       [event.target.username]: event.target.value,
     });
+    console.log(user)
   };
 
   const saveUser = (e) => {
