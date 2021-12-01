@@ -3,6 +3,7 @@ import Navbar from "../../Components/Navbar/Navbar";
 import store from "../../store";
 import ApiBook from "../../Components/Api/ApiBook";
 import event from "../../eventsActions";
+import CreateUser from "../../Components/CreateUser";
 
 const Home = () => {
   const {
@@ -15,17 +16,23 @@ const Home = () => {
     ApiBook.findAll().then((response) => {
       if (response.ok) {
         response.json().then((books) => {
-          dispatch(event.findBook(books))
+          dispatch(event.findBook(books));
         });
       }
     });
   }, [dispatch]);
 
+  const leerPDF = () => {
+    window.location.href="/pdf"
+  }
+
   return (
     <Fragment>
       <Navbar />
       <div className="container mt-4">
-        <button className="btn btn-secondary mb-4">Agregar Nuevo libro</button>
+
+        <CreateUser />
+
         <table className="table">
           <thead>
             <tr className="table-primary">
@@ -33,9 +40,9 @@ const Home = () => {
               <th scope="col">Titulo</th>
               <th scope="col">Autor</th>
               <th scope="col">Descripcion</th>
-              {/* <th scope="col"></th>
+              <th scope="col"></th>
             <th scope="col"></th>
-            <th scope="col"></th> */}
+            <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
@@ -44,10 +51,10 @@ const Home = () => {
                 <tr key={element.isbn}>
                   <th scope="row">{element.isbn}</th>
                   <td>{element.name}</td>
-                  <td>{element.description}</td>
                   <td>{element.author}</td>
+                  <td>{element.description}</td>
                   <td>
-                    <button className="btn btn-success">Leer</button>
+                    <a href="/pdf" target="_blank"><button className="btn btn-success">Leer</button></a>
                   </td>
                   <td>
                     <button className="btn btn-primary">Editar</button>
