@@ -1,8 +1,6 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useState} from "react";
 import { useForm } from "react-hook-form";
 import ApiUser from "../../Components/Api/ApiUser";
-import event from "../../eventsActions";
-import store from "../../store";
 import Cookies from "universal-cookie"
 
 const Login = () => {
