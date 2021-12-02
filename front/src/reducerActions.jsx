@@ -33,12 +33,12 @@ export default () => {
   };
   action[TYPE.BOOK_CREATE] = (state, action) => {
     const books = state.books.elements;
-    books.push(action.books);
+    books.push(action.book);
     return { ...state, books: { elements: books } };
   };
   action[TYPE.BOOK_DELETE] = (state, action) => {
     const books = state.books.elements.filter((element) => {
-      return element.id !== action.id;
+      return element.isbn !== action.isbn;
     });
     return { ...state, books: { elements: books } };
   };

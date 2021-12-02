@@ -3,7 +3,8 @@ import Navbar from "../../Components/Navbar/Navbar";
 import store from "../../store";
 import ApiBook from "../../Components/Api/ApiBook";
 import event from "../../eventsActions";
-import CreateUser from "../../Components/CreateUser";
+import CreateBook from "../../Components/books/CreateBook";
+import DeleteBook from "../../Components/books/DeleteBook";
 
 const Home = () => {
   const {
@@ -14,24 +15,22 @@ const Home = () => {
 
   useEffect(() => {
     ApiBook.findAll().then((response) => {
-      if (response.ok) {
+      if (response) {
         response.json().then((books) => {
           dispatch(event.findBook(books));
         });
       }
-    });
+    }).catch((response) =>{
+      console.log(response);
+    })
   }, [dispatch]);
-
-  const leerPDF = () => {
-    window.location.href="/pdf"
-  }
 
   return (
     <Fragment>
       <Navbar />
       <div className="container mt-4">
 
-        <CreateUser />
+        <CreateBook />
 
         <table className="table">
           <thead>
@@ -60,7 +59,7 @@ const Home = () => {
                     <button className="btn btn-primary">Editar</button>
                   </td>
                   <td>
-                    <button className="btn btn-danger">Eliminar</button>
+                    <DeleteBook isbn={element.isbn} />
                   </td>
                 </tr>
               );

@@ -1,4 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
+
 const HOST_API = "http://localhost:8080/api/";
 
 export default {
@@ -27,8 +28,8 @@ export default {
     }).catch((error) => console.error("Error:", error));
   },
 
-  delete: async (id) => {
-    return fetch(HOST_API + "idAdmin/book/"+ id, {
+  delete: async (isbn) => {
+    return fetch(HOST_API + "idAdmin/book/"+ isbn, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
