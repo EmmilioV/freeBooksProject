@@ -1,17 +1,43 @@
-import React from "react";
+import React, {useState, useEffect, useContext} from "react";
 import { useForm } from "react-hook-form";
+import ApiUser from "../../Components/Api/ApiUser";
+import event from "../../eventsActions";
+import store from "../../store";
+import Cookies from "universal-cookie"
+
 
 const Login = () => {
-
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm();
+    const [username, setUsername] = useState()
+    const [password, setPassword] = useState()
+    const {state:{users}, dispatch} = useContext(store)
+    const cookies = new Cookies()
+    const [accessDenied, setAccessDenied] = useState(false) 
 
-    const onSubmit = (data, e) =>{
-        console.log(data);
-        e.target.reset();
+
+    useEffect(() => {
+      ApiUser.findAll().then((response) => {
+        if (response.ok) {
+          response.json().then((users) => {
+            dispatch(event.findUser(users));
+          });
+        }
+      });
+    }, [dispatch]);
+
+    const onSubmit = () =>{
+      users.elements.map((element)=>{
+        setAccessDenied(false)
+        if (username === element.username && password === element.password) {
+          cookies.set("id", element.id, {path:"/"})
+          window.location.href="/home"
+        }
+          setAccessDenied(true)
+      })
     }
 
   return (
@@ -21,12 +47,14 @@ const Login = () => {
           Usuario
         </label>
         <input type="text" className="form-control" id="username" 
+        placeholder="Ingrese el usuario"
         {...register("username", {
             required: {
               value: true,
               message: "Campo requerido",
             },
-          })}/>
+          })}
+          onChange={(e) =>{setUsername(e.target.value)}}/>
         <div className="text-danger">{errors?.username?.message}</div>
       </div>
       <div className="mb-4">
@@ -34,12 +62,18 @@ const Login = () => {
           Contraseña
         </label>
         <input type="password" className="form-control" id="password" 
+        placeholder="Ingrese la contraseña"
         {...register("password", {
             required: {
               value: true,
               message: "Campo requerido",
             },
-          })}/>
+            minLength:{
+              value: 8,
+              message: "La contraseña debe ser mayor de 8 caracteres"
+            }
+          })}
+          onChange={(e) =>{setPassword(e.target.value)}}/>
         <div className="text-danger">{errors?.password?.message}</div>
       </div>
       <a href="/register">¿Aun no estas registrado?</a>
@@ -48,6 +82,7 @@ const Login = () => {
           Iniciar sesión
         </button>
       </div>
+      {accessDenied === true && <h5 className="text-center mt-4 text-danger">Usuario o contraseña invalido</h5>} 
     </form>
   );
 };

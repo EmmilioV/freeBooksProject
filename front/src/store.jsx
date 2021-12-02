@@ -1,9 +1,13 @@
 import React, { useReducer, createContext } from "react";
-import { reducerActions } from "./reducerActions";
+import reducerActions from "./reducerActions";
 
 const initialState = {
-  users: [],
-  books: [],
+  users: {
+    elements:[]
+  },
+  books: {
+    elements:[]
+  },
 };
 
 const store = createContext(initialState);
