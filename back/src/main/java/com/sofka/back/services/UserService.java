@@ -6,6 +6,8 @@ import com.sofka.back.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class UserService {
 
@@ -18,6 +20,16 @@ public class UserService {
     public UserDto save(UserDto userDto){
         user = userRepository.save(convertToUser(userDto));
         return convertToUserDto(user);
+    }
+
+    public ArrayList<UserDto> getAllUsers(){
+        ArrayList<UserDto> usersDto = new ArrayList<>();
+
+        for (User userModel: userRepository.findAll()) {
+            usersDto.add(convertToUserDto(userModel));
+        }
+
+        return usersDto;
     }
 
     public UserDto findById(Long id){
