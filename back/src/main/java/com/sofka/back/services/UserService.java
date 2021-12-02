@@ -22,6 +22,8 @@ public class UserService {
 
     public UserDto findById(Long id){
         user = userRepository.findById(id).orElse(null);
+        if(user == null)
+            return null;
         return convertToUserDto(user);
     }
 
