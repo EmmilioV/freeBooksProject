@@ -44,8 +44,8 @@ export default () => {
   };
   action[TYPE.BOOK_UPDATE] = (state, action) => {
     const books = state.books.elements.map((element) => {
-      if (element.id === action.book.id) {
-        return { ...state, books: action.book };
+      if (element.isbn === action.book.isbn) {
+        return { ...action.book, books: action };
       }
       return element;
     });

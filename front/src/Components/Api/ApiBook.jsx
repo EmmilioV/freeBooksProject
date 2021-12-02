@@ -18,8 +18,8 @@ export default {
     }).catch((error) => console.error("Error:", error));
   },
 
-  update: async (id, request) => {
-    return fetch(HOST_API + "idAdmin/book"+ id, {
+  update: async (isbn, request) => {
+    return fetch(HOST_API + "idAdmin/book/"+ isbn, {
       method: "PUT",
       body: JSON.stringify(request),
       headers: {

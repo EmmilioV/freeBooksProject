@@ -27,11 +27,11 @@ const CreateBook = () => {
           response.json().then((newBook) => {
             dispatch(event.saveBook(newBook));
             formRef.current.reset();
-            setIsbn("");
-            setName("");
-            setDescription("");
-            setAuthor("");
-            setPath("");
+            setIsbn(null);
+            setName(null);
+            setDescription(null);
+            setAuthor(null);
+            setPath(null);
           });
         }
       })
@@ -190,7 +190,7 @@ const CreateBook = () => {
                 >
                   Salir
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">
                   Guardar
                 </button>
               </div>

@@ -1,31 +1,38 @@
+/* eslint-disable no-unused-expressions */
 import React, { Fragment, useContext, useState } from "react";
 import store from "../../store";
 import ApiBook from "../../Components/Api/ApiBook";
 import event from "../../eventsActions";
 import { useForm } from "react-hook-form";
 
-const EditBook = (props) => {
+const EditBook = ({ book }) => {
   const { dispatch } = useContext(store);
   const {register, handleSubmit, formState: { errors }} = useForm();
-  const [isbn, setIsbn] = useState(props.element.isbn);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [author, setAuthor] = useState("");
-  const [path, setPath] = useState("");
+  const idBotonModal = "#editBook" + book.isbn;
+  const idModal = "editBook" + book.isbn;
 
-//   console.log(isbn);
+  const [isbn, setIsbn] = useState(book.isbn);
+  const [name, setName] = useState(book.name);
+  const [description, setDescription] = useState(book.description);
+  const [author, setAuthor] = useState(book.author);
+  const [path, setPath] = useState(book.path);
 
-  const onEdit = (isbn) => {
-      console.log(isbn);
-    // ApiBook.delete(isbn)
-    //   .then((response) => {
-    //     if (response.ok) {
-    //       dispatch(event.deleteBook(isbn));
-    //     }
-    //   })
-    //   .catch((response) => {
-    //     console.log(response);
-    //   });
+  const onEdit = () => {
+    ApiBook.update(isbn, {
+      isbn: isbn,
+      name: name,
+      description: description,
+      author: author,
+      path: path,
+    }).then((response) => {
+        if (response.ok) {
+          response.json().then((result) =>{
+              dispatch(event.updateBook(isbn, result))
+          })
+        }
+      }).catch((response) => {
+        console.log(response);
+      });
   };
 
   return (
@@ -34,14 +41,14 @@ const EditBook = (props) => {
         type="button"
         className="btn btn-primary mb-4"
         data-bs-toggle="modal"
-        data-bs-target="#editBook"
+        data-bs-target={idBotonModal}
       >
         Editar
       </button>
 
       <div
         className="modal fade"
-        id="editBook"
+        id={idModal}
         data-bs-backdrop="static"
         data-bs-keyboard="false"
         tabIndex="-1"
@@ -62,7 +69,7 @@ const EditBook = (props) => {
               ></button>
             </div>
 
-            <form>
+            <form onSubmit={handleSubmit(onEdit)}>
               <div className="modal-body">
                 <label htmlFor="isbn" className="form-label">
                   ISBN
@@ -71,18 +78,10 @@ const EditBook = (props) => {
                   type="text"
                   className="form-control"
                   id="isbn"
+                  value={isbn}
+                  disabled
                   placeholder="Ingrese el ISBN"
-                  {...register("isbn", {
-                    required: {
-                      value: true,
-                      message: "Campo requerido",
-                    },
-                  })}
-                  onChange={(e) => {
-                    setIsbn(e.target.value);
-                  }}
                 />
-                <div className="text-danger">{errors?.isbn?.message}</div>
                 <label htmlFor="name" className="form-label">
                   Titulo
                 </label>
@@ -90,6 +89,7 @@ const EditBook = (props) => {
                   type="text"
                   className="form-control"
                   id="name"
+                  value={name}
                   placeholder="Ingrese el nombre del libro"
                   {...register("name", {
                     required: {
@@ -109,6 +109,7 @@ const EditBook = (props) => {
                   type="text"
                   className="form-control"
                   id="description"
+                  value={description}
                   placeholder="Ingrese una breve descripción"
                   {...register("description", {
                     required: {
@@ -130,6 +131,7 @@ const EditBook = (props) => {
                   type="text"
                   className="form-control"
                   id="author"
+                  value={author}
                   placeholder="Ingrese el autor del libro"
                   {...register("author", {
                     required: {
@@ -157,6 +159,7 @@ const EditBook = (props) => {
                   type="text"
                   className="form-control"
                   id="path"
+                  value={path}
                   placeholder="Ingrese la ruta del libro"
                   {...register("path", {
                     required: {
@@ -178,7 +181,11 @@ const EditBook = (props) => {
                 >
                   Salir
                 </button>
-                <button type="button" onClick={onEdit} className="btn btn-primary">
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  data-bs-dismiss="modal"
+                >
                   Guardar
                 </button>
               </div>

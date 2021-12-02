@@ -20,6 +20,8 @@ const AdministratorUsers = () => {
           dispatch(event.findUser(users));
         });
       }
+    }).catch((response) => {
+      console.log(response);
     });
   }, [dispatch]);
 

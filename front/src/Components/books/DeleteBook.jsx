@@ -1,13 +1,25 @@
-import React, { Fragment, useState} from "react";
+import React, { Fragment, useContext } from "react";
+import ApiBook from "../Api/ApiBook";
+import store from "../../store";
+import event from "../../eventsActions";
 
-const DeleteBook = (props) => {
+const DeleteBook = ({isbn}) => {
 
-  const [isbn, setIsbn] = useState(props)
-  
-  const confirmed = () => {
-    console.log(isbn);
-  }
+  const { dispatch } = useContext(store);
+  const idBotonModal = "#deleteBook" + isbn;
+  const idModal = "deleteBook" + isbn;
 
+    const onDelete = () => {
+      ApiBook.delete(isbn).then((response) => {
+        if(response.ok) {
+            dispatch(event.deleteBook(isbn));
+          }
+        })
+        .catch((response) => {
+          console.log(response);
+        });
+     
+    }
 
   return (
     <Fragment>
@@ -15,14 +27,14 @@ const DeleteBook = (props) => {
         type="button"
         className="btn btn-danger"
         data-bs-toggle="modal"
-        data-bs-target="#deleteBook"
+        data-bs-target={idBotonModal}
       >
         Eliminar
       </button>
 
       <div
         className="modal fade"
-        id="deleteBook"
+        id={idModal}
         tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
@@ -48,7 +60,7 @@ const DeleteBook = (props) => {
               >
                 Volver
               </button>
-              <button type="button" onClick={confirmed} className="btn btn-danger" data-bs-dismiss="modal">
+              <button type="button" onClick={onDelete} className="btn btn-danger" data-bs-dismiss="modal">
                 Eliminar
               </button>
             </div>

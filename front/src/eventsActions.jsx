@@ -33,8 +33,8 @@ export default {
   deleteBook: (isbn) => ({
     type: TYPE.BOOK_DELETE, isbn
   }),
-  updateBook: (id, book) => ({
-    type: TYPE.BOOK_UPDATE, id, book
+  updateBook: (isbn, book) => ({
+    type: TYPE.BOOK_UPDATE, book, isbn
   })
   
 };
