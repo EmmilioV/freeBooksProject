@@ -37,7 +37,7 @@ public class AccountController {
         return response;
     }
 
-    @GetMapping("api/login")
+    @PostMapping("api/login")
     public Response login(@RequestBody UserDto data){
         response = new Response();
         response.setIsSuccess(false); //se inicializa la respuesta como no exitosa

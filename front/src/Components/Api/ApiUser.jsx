@@ -3,9 +3,18 @@ const HOST_API = "http://localhost:8080/api/";
 
 export default {
   findAll: async () => {
-    return fetch(HOST_API + "login").catch((error) =>
+    return fetch(HOST_API + "").catch((error) =>
       console.error("Error: ", error)
     );
+  },
+  login: async (request) =>{
+    return fetch(HOST_API+"login",{
+      method: "POST",
+      headers:{
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(request),
+    }).catch((error) => console.error("Error:", error));
   },
   save: async (request) => {
     return fetch(HOST_API + "login/register", {
@@ -13,7 +22,7 @@ export default {
       body: JSON.stringify(request),
       headers: {
         "Content-Type": "application/json",
-      },
+      }
     }).catch((error) => console.error("Error:", error));
   },
 

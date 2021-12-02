@@ -5,25 +5,29 @@ import event from "../../eventsActions";
 import store from "../../store";
 import Cookies from "universal-cookie"
 
-
-
 const Login = () => {
     const {register, handleSubmit, formState: { errors }} = useForm();
     const [username, setUsername] = useState()
     const [password, setPassword] = useState()
-    const {state:{users}, dispatch} = useContext(store)
     const cookies = new Cookies()
     const [accessDenied, setAccessDenied] = useState(false) 
 
     const onSubmit = () =>{
-      users.elements.map((element)=>{
-        setAccessDenied(false)
-        if (username === element.username && password === element.password) {
-          cookies.set("id", element.id, {path:"/"})
-          window.location.href="/home"
+      ApiUser.login({username:username, password:password}).then((response)=>{
+        if(response.ok){
+          response.json().then((user) =>{
+            if (user.isSuccess) {
+              cookies.set("id", user.result.id, {path:"/"})
+              window.location.href = "/home"
+            }
+            setAccessDenied(true)
+          })
         }
-          setAccessDenied(true)
       })
+      .catch((response) =>{
+        console.log(response)
+      })
+    
     }
 
   return (
