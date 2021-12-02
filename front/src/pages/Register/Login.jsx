@@ -6,28 +6,14 @@ import store from "../../store";
 import Cookies from "universal-cookie"
 
 
+
 const Login = () => {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm();
+    const {register, handleSubmit, formState: { errors }} = useForm();
     const [username, setUsername] = useState()
     const [password, setPassword] = useState()
     const {state:{users}, dispatch} = useContext(store)
     const cookies = new Cookies()
     const [accessDenied, setAccessDenied] = useState(false) 
-
-
-    useEffect(() => {
-      ApiUser.findAll().then((response) => {
-        if (response.ok) {
-          response.json().then((users) => {
-            dispatch(event.findUser(users));
-          });
-        }
-      });
-    }, [dispatch]);
 
     const onSubmit = () =>{
       users.elements.map((element)=>{

@@ -1,13 +1,14 @@
-const HOST_API = "http://localhost:3001/";
-// eslint-disable-next-line import/no-anonymous-default-export
+/* eslint-disable import/no-anonymous-default-export */
+const HOST_API = "http://localhost:8080/api/";
+
 export default {
   findAll: async () => {
-    return fetch(HOST_API + "usuarios").catch((error) =>
+    return fetch(HOST_API + "login").catch((error) =>
       console.error("Error: ", error)
     );
   },
   save: async (request) => {
-    return fetch(HOST_API, {
+    return fetch(HOST_API + "login/register", {
       method: "POST",
       body: JSON.stringify(request),
       headers: {

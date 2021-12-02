@@ -1,3 +1,4 @@
+/* eslint-disable no-implied-eval */
 
 import React, { useState, useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -6,56 +7,26 @@ import event from "../../eventsActions";
 import ApiUser from "../../Components/Api/ApiUser";
 
 const Register = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  const {
-    state: { users },
-    dispatch,
-  } = useContext(store);
+  const {register, handleSubmit, formState: { errors }} = useForm();
+  const {dispatch} = useContext(store);
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [nameDenied, setNameDenied] = useState(false);
-
-  useEffect(() => {
-    ApiUser.findAll().then((response) => {
-      if (response.ok) {
-        response.json().then((users) => {
-          dispatch(event.findUser(users));
-        });
-      }
-    });
-  }, [dispatch]);
-
-  const validateName = () => {
-    users.elements.map((element) => {
-      if (username === element.username) {
-        setNameDenied(true);
-      }
-    });
-  };
+  const [success, setSuccess] = useState(false);
 
   const saveNewUser = (even) => {
-    setNameDenied(false)
-    validateName();
-    if (nameDenied) {
-      const request = {
-        name: username,
-        id: null,
-        password: password,
-      };
 
-      console.log(request);
-
-      ApiUser.save(request).then((response) => {
+      ApiUser.save({username:username, password:password}).then((response) => {
         response.json().then((result) => {
           dispatch(event.saveUser(result));
+          setNameDenied(false)
+          setSuccess(true)
+          setTimeout("location.href='http://localhost:3000'", 3000)
         });
-      });
-      window.location.href = "/home"
-    }
+      }).catch((response) =>{
+        setNameDenied(true)
+        console.log(response);
+      })
   };
 
   return (
@@ -117,6 +88,11 @@ const Register = () => {
           Registrarse
         </button>
       </div>
+      {success === true && (
+        <h5 className="text-center mt-5 text-success">
+          Registro exitoso. Será redireccionado al login
+        </h5>
+      )}
       {nameDenied === true && (
         <h5 className="text-center mt-5 text-danger">
           Ya existe un usuario con ese nombre. Intente con otro

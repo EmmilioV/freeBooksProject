@@ -21,7 +21,7 @@ export default {
     type: TYPE.USER_DELETE, id
   }),
   updateUser: (id, user) => ({
-    type: TYPE.USER_UPDATE, id, user
+    type: TYPE.USER_UPDATE, user, id
   }),
   
   findBook: (books) => ({

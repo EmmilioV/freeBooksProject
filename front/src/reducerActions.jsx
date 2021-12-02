@@ -14,20 +14,19 @@ export default () => {
   };
   action[TYPE.USER_DELETE] = (state, action) => {
     const users = state.users.elements.filter((element) => {
-      return element.id !== action.idUser;
+      return element.id !== action.id;
     });
     return { ...state, users: { elements: users } };
   };
   action[TYPE.USER_UPDATE] = (state, action) => {
     const users = state.users.elements.map((element) => {
       if (element.id === action.user.id) {
-        return { ...state, users: action.user };
+        return { ...action.book, users: action };
       }
       return element;
     });
     return { ...state, users: { elements: users } };
   };
-  
   action[TYPE.BOOK_FIND] = (state, action) => {
     return { ...state, books: { elements: action.books } };
   };
@@ -51,6 +50,7 @@ export default () => {
     });
     return { ...state, books: { elements: books } };
   };
+  
 
   return action;
 };
