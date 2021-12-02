@@ -4,7 +4,8 @@ import store from "../../store";
 import ApiBook from "../../Components/Api/ApiBook";
 import event from "../../eventsActions";
 import CreateBook from "../../Components/books/CreateBook";
-import DeleteBook from "../../Components/books/DeleteBook";
+import EditBook from "../../Components/books/EditBook";
+// import DeleteBook from "../../Components/books/DeleteBook";
 
 const Home = () => {
   const {
@@ -24,6 +25,16 @@ const Home = () => {
       console.log(response);
     })
   }, [dispatch]);
+
+  const onDelete = (isbn) => {
+    ApiBook.delete(isbn).then((response) => {
+      if(response.ok) {
+          dispatch(event.deleteBook(isbn));
+      }})
+      .catch((response) => {
+        console.log(response);
+      });
+  }
 
   return (
     <Fragment>
@@ -56,13 +67,14 @@ const Home = () => {
                     <a href="/pdf" target="_blank"><button className="btn btn-success">Leer</button></a>
                   </td>
                   <td>
-                    <button className="btn btn-primary">Editar</button>
+                    <EditBook element={element} />
                   </td>
                   <td>
-                    <DeleteBook isbn={element.isbn} />
+                    <button className="btn btn-danger" onClick={() => onDelete(element.isbn)}>Eliminar</button>
+                    {/* <DeleteBook onDelete={onDelete} isbn={element.isbn} /> */}
                   </td>
                 </tr>
-              );
+              )
             })}
           </tbody>
         </table>

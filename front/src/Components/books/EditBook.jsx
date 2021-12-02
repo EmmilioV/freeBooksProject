@@ -1,59 +1,47 @@
-import React, { Fragment, useContext, useState, useRef } from "react";
-import { useForm } from "react-hook-form";
-import ApiBook from "../Api/ApiBook";
+import React, { Fragment, useContext, useState } from "react";
 import store from "../../store";
+import ApiBook from "../../Components/Api/ApiBook";
 import event from "../../eventsActions";
+import { useForm } from "react-hook-form";
 
-const CreateBook = () => {
-  const {register, handleSubmit, formState: { errors }} = useForm();
-  const formRef = useRef(null);
+const EditBook = (props) => {
   const { dispatch } = useContext(store);
-  const [isbn, setIsbn] = useState("");
+  const {register, handleSubmit, formState: { errors }} = useForm();
+  const [isbn, setIsbn] = useState(props.element.isbn);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [author, setAuthor] = useState("");
   const [path, setPath] = useState("");
 
-  const onCreate = (even) => {
-    ApiBook.save({
-      isbn: isbn,
-      name: name,
-      description: description,
-      author: author,
-      path: path,
-    })
-      .then((response) => {
-        if (response.ok) {
-          response.json().then((newBook) => {
-            dispatch(event.saveBook(newBook));
-            formRef.current.reset();
-            setIsbn("");
-            setName("");
-            setDescription("");
-            setAuthor("");
-            setPath("");
-          });
-        }
-      })
-      .catch((response) => {
-        console.log(response);
-      });
+//   console.log(isbn);
+
+  const onEdit = (isbn) => {
+      console.log(isbn);
+    // ApiBook.delete(isbn)
+    //   .then((response) => {
+    //     if (response.ok) {
+    //       dispatch(event.deleteBook(isbn));
+    //     }
+    //   })
+    //   .catch((response) => {
+    //     console.log(response);
+    //   });
   };
 
   return (
-    <div>
+    <Fragment>
       <button
         type="button"
         className="btn btn-primary mb-4"
         data-bs-toggle="modal"
-        data-bs-target="#createBook"
+        data-bs-target="#editBook"
       >
-        Agregar un nuevo libro
+        Editar
       </button>
 
       <div
         className="modal fade"
-        id="createBook"
+        id="editBook"
         data-bs-backdrop="static"
         data-bs-keyboard="false"
         tabIndex="-1"
@@ -64,7 +52,7 @@ const CreateBook = () => {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="staticBackdropLabel">
-                Ingrese los datos para el nuevo libro
+                Ingrese los nuevos datos
               </h5>
               <button
                 type="button"
@@ -74,7 +62,7 @@ const CreateBook = () => {
               ></button>
             </div>
 
-            <form ref={formRef} onSubmit={handleSubmit(onCreate)}>
+            <form>
               <div className="modal-body">
                 <label htmlFor="isbn" className="form-label">
                   ISBN
@@ -190,7 +178,7 @@ const CreateBook = () => {
                 >
                   Salir
                 </button>
-                <button type="submit" className="btn btn-primary">
+                <button type="button" onClick={onEdit} className="btn btn-primary">
                   Guardar
                 </button>
               </div>
@@ -198,8 +186,8 @@ const CreateBook = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Fragment>
   );
 };
 
-export default CreateBook;
+export default EditBook;
