@@ -6,6 +6,8 @@ import com.sofka.back.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
@@ -18,6 +20,7 @@ public class UserController {
     @PutMapping(value = "api/{idAdmin}/user")
     public Response editUser(@RequestBody UserDto userUpdated, @PathVariable("idAdmin")Long id){
         response = new Response();
+        response.setIsSuccess(false); //se inicializa la respuesta como no exitosa
 
         if(!validateUserAdmin(id)){
             response.setMessage("Acceso denegado");
@@ -40,6 +43,21 @@ public class UserController {
 
         response.setIsSuccess(true);
         response.setResult(userDto);
+        return response;
+    }
+
+    @GetMapping(value = "api/{idAdmin}/users")
+    public Response getUsers(@PathVariable("idAdmin") Long id){
+        response = new Response();
+        response.setIsSuccess(false); //se inicializa la respuesta como no exitosa
+
+        if(!validateUserAdmin(id))
+        {
+            response.setMessage("Acceso denegado");
+            return response;
+        }
+        response.setIsSuccess(true);
+        response.setResult(userService.getAllUsers());
         return response;
     }
 
