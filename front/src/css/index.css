@@ -19,3 +19,12 @@ code {
   border-radius: 5px;
   width: fit-content;
 }
+
+.clickable{
+  cursor: pointer;
+}
+
+.disabled{
+  cursor: not-allowed;
+  color: lightgray;
+}

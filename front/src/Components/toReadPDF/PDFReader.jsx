@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
 import ControlPanel from './ControlPanel';
+import '../../css/estilos.css'
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 const PDFReader = () => {
@@ -15,7 +16,7 @@ const PDFReader = () => {
     return ( 
         <div>
             <section id="pdf-section" className="d-flex flex-column align-items-center w-100">
-                <ControlPanel numPages={numPages} pageNumber={pageNumber}/>
+                <ControlPanel numPages={numPages} pageNumber={pageNumber} setPageNumber={setPageNumber}/>
                 <Document
                     file="/assets/books/ciudad-de-hueso.pdf"
                     onLoadSuccess={onDocumentLoadSuccess}
