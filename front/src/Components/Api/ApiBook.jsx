@@ -8,6 +8,11 @@ export default {
       console.error("Error: ", error)
     );
   },
+  findByCriteria: async (criteria) => {
+    return fetch(HOST_API + "books/"+ criteria).catch((error) =>
+      console.error("Error: ", error)
+    );
+  },
   save: async (request) => {
     return fetch(HOST_API+ "idAdmin/book", {
       method: "POST",
@@ -27,7 +32,6 @@ export default {
       },
     }).catch((error) => console.error("Error:", error));
   },
-
   delete: async (isbn) => {
     return fetch(HOST_API + "idAdmin/book/"+ isbn, {
       method: "DELETE",

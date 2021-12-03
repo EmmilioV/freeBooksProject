@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect} from "react";
+import React, { Fragment, useContext, useEffect, useState} from "react";
 import Navbar from "../../Components/Navbar/Navbar";
 import store from "../../store";
 import ApiBook from "../../Components/Api/ApiBook";
@@ -6,15 +6,18 @@ import event from "../../eventsActions";
 import CreateBook from "../../Components/books/CreateBook";
 import EditBook from "../../Components/books/EditBook";
 import DeleteBook from "../../Components/books/DeleteBook";
+import Cookies from "js-cookie";
 
 const Home = () => {
   const {state: { books},dispatch} = useContext(store);
   const listBooks = books.elements;
+  const isAdmin = Cookies.get("admin");
+  const [bookSearch, setBookSearch] = useState("")
 
   useEffect(() => {
     ApiBook.findAll()
       .then((response) => {
-        if (response) {
+        if (response.ok) {
           response.json().then((books) => {
             dispatch(event.findBook(books));
           });
@@ -25,11 +28,21 @@ const Home = () => {
       });
   }, [dispatch]);
 
+  const onSearch = (book, event) =>{
+    if(event.target.value !== ""){
+      setBookSearch(book)
+      return
+    }
+    setBookSearch("")
+  }
+
   return (
     <Fragment>
-      <Navbar/>
+      <Navbar onSearch={onSearch}/>
       <div className="container mt-4">
-        <CreateBook />
+
+        {isAdmin === "true" ?
+        <CreateBook />: <div></div>}
 
         <table className="table">
           <thead>
@@ -44,7 +57,8 @@ const Home = () => {
             </tr>
           </thead>
           <tbody>
-            {listBooks.map((element) => (
+            {bookSearch.length === 0 ?
+            listBooks.map((element) => (
               <tr key={element.isbn} id={element.isbn}>
                 <th scope="row">{element.isbn}</th>
                 <td>{element.name}</td>
@@ -56,14 +70,39 @@ const Home = () => {
                   </a>
                 </td>
                 <td>
-                  <EditBook book={element} />
+                  {isAdmin === "true" ?
+                  <EditBook book={element} />: <div></div>}
                 </td>
                 <td>
-                  <DeleteBook isbn={element.isbn}/>
+                  {isAdmin === "true" ?
+                  <DeleteBook isbn={element.isbn}/>: <div></div>}
                 </td>
               </tr>
 
-            ))}
+            )): 
+              bookSearch.map((element) =>(
+                <tr key={element.isbn}>
+                <th scope="row">{element.isbn}</th>
+                <td>{element.name}</td>
+                <td>{element.author}</td>
+                <td>{element.description}</td>
+                <td>
+                  <a href="/pdf" target="_blank">
+                    <button className="btn btn-success">Leer</button>
+                  </a>
+                </td>
+                <td>
+                  {isAdmin === "true" ?
+                  <EditBook book={element} />: <div></div>}
+                </td>
+                <td>
+                  {isAdmin === "true" ?
+                  <DeleteBook isbn={element.isbn}/>: <div></div>}
+                </td>
+              </tr>
+              ))
+
+            }  
           </tbody>
         </table>
       </div>
