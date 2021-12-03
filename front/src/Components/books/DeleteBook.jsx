@@ -3,15 +3,16 @@ import ApiBook from "../Api/ApiBook";
 import store from "../../store";
 import event from "../../eventsActions";
 
-const DeleteBook = (props) => {
+const DeleteBook = ({isbn}) => {
 
   const { dispatch } = useContext(store);
-  const isbn = props.isbn
+  const idBotonModal = "#deleteBook" + isbn;
+  const idModal = "deleteBook" + isbn;
 
     const onDelete = () => {
       ApiBook.delete(isbn).then((response) => {
         if(response.ok) {
-            dispatch(event.DeleteBook(isbn));
+            dispatch(event.deleteBook(isbn));
           }
         })
         .catch((response) => {
@@ -26,14 +27,14 @@ const DeleteBook = (props) => {
         type="button"
         className="btn btn-danger"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target={idBotonModal}
       >
         Eliminar
       </button>
 
       <div
         className="modal fade"
-        id="exampleModal"
+        id={idModal}
         tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"

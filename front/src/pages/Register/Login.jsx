@@ -1,43 +1,32 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useState} from "react";
 import { useForm } from "react-hook-form";
 import ApiUser from "../../Components/Api/ApiUser";
-import event from "../../eventsActions";
-import store from "../../store";
 import Cookies from "universal-cookie"
 
-
 const Login = () => {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-    } = useForm();
+    const {register, handleSubmit, formState: { errors }} = useForm();
     const [username, setUsername] = useState()
     const [password, setPassword] = useState()
-    const {state:{users}, dispatch} = useContext(store)
     const cookies = new Cookies()
     const [accessDenied, setAccessDenied] = useState(false) 
 
-
-    useEffect(() => {
-      ApiUser.findAll().then((response) => {
-        if (response.ok) {
-          response.json().then((users) => {
-            dispatch(event.findUser(users));
-          });
-        }
-      });
-    }, [dispatch]);
-
     const onSubmit = () =>{
-      users.elements.map((element)=>{
-        setAccessDenied(false)
-        if (username === element.username && password === element.password) {
-          cookies.set("id", element.id, {path:"/"})
-          window.location.href="/home"
+      ApiUser.login({username:username, password:password}).then((response)=>{
+        if(response.ok){
+          response.json().then((user) =>{
+            if (user.isSuccess) {
+              cookies.set("id", user.result.id, {path:"/"})
+              cookies.set("admin", user.result.admin, {path:"/"})
+              window.location.href = "/home"
+            }
+            setAccessDenied(true)
+          })
         }
-          setAccessDenied(true)
       })
+      .catch((response) =>{
+        console.log(response)
+      })
+    
     }
 
   return (

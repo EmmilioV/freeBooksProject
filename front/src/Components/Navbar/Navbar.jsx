@@ -1,12 +1,29 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import logo from "../../Img/book.png";
+import Cookies from "js-cookie";
+import ApiBook from "../Api/ApiBook";
 
-const Navbar = () => {
-  
+const Navbar = (props) => {
+
+  const [nameBook, setNameBook] = useState("")
+  const isAdmin = Cookies.get("admin");
+
+  const search = (event) => {
+    setNameBook(event.target.value)
+    ApiBook.findByCriteria(nameBook).then((response) =>{
+      if (response.ok) {
+        response.json().then((book) => {
+          props.onSearch(book, event)
+        });
+      }
+    })
+  }
+
   const deleteCookie = () => {
     let now = new Date (0); 
     let expireTime = now.getTime(); 
     now.setTime(expireTime); 
+    document.cookie =document.cookie+';expires='+now.toUTCString()+';path=/';   
     document.cookie =document.cookie+';expires='+now.toUTCString()+';path=/';   
   };
 
@@ -36,6 +53,7 @@ const Navbar = () => {
                   Inicio
                 </a>
               </li>
+              {isAdmin === "true" ? 
               <li className="nav-item">
                 <a
                   className="nav-link active"
@@ -44,7 +62,7 @@ const Navbar = () => {
                 >
                   Administrar usuarios
                 </a>
-              </li>
+              </li>: <div></div>}
               <li className="nav-item">
                 <a
                   className="nav-link active"
@@ -61,8 +79,9 @@ const Navbar = () => {
                 className="form-control me-2"
                 type="search"
                 placeholder="Ingrese el libro"
+                onChange={search}
               />
-              <button className="btn btn-outline-success" type="submit">
+              <button className="btn btn-outline-success" type="button" onClick={search}>
                 Buscar
               </button>
             </form>

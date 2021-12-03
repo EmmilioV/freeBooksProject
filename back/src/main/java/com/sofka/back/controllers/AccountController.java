@@ -4,15 +4,13 @@ import com.sofka.back.Response;
 import com.sofka.back.dtos.UserDto;
 import com.sofka.back.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class AccountController {
     @Autowired
@@ -39,7 +37,7 @@ public class AccountController {
         return response;
     }
 
-    @GetMapping("api/login")
+    @PostMapping("api/login")
     public Response login(@RequestBody UserDto data){
         response = new Response();
         response.setIsSuccess(false); //se inicializa la respuesta como no exitosa

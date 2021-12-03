@@ -1,41 +1,36 @@
-import React, { Fragment, useContext, useState, useRef } from "react";
-import { useForm } from "react-hook-form";
-import ApiBook from "../Api/ApiBook";
+/* eslint-disable no-unused-expressions */
+import React, { Fragment, useContext, useState } from "react";
 import store from "../../store";
+import ApiBook from "../../Components/Api/ApiBook";
 import event from "../../eventsActions";
+import { useForm } from "react-hook-form";
 
-const CreateBook = () => {
-  const {register, handleSubmit, formState: { errors }} = useForm();
-  const formRef = useRef(null);
+const EditBook = ({ book }) => {
   const { dispatch } = useContext(store);
-  const [isbn, setIsbn] = useState("");
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [author, setAuthor] = useState("");
-  const [path, setPath] = useState("");
+  const {register, handleSubmit, formState: { errors }} = useForm();
+  const idBotonModal = "#editBook" + book.isbn;
+  const idModal = "editBook" + book.isbn;
 
-  const onCreate = () => {
-    ApiBook.save({
+  const [isbn, setIsbn] = useState(book.isbn);
+  const [name, setName] = useState(book.name);
+  const [description, setDescription] = useState(book.description);
+  const [author, setAuthor] = useState(book.author);
+  const [path, setPath] = useState(book.path);
+
+  const onEdit = () => {
+    ApiBook.update(isbn, {
       isbn: isbn,
       name: name,
       description: description,
       author: author,
       path: path,
-    })
-      .then((response) => {
+    }).then((response) => {
         if (response.ok) {
-          response.json().then((newBook) => {
-            dispatch(event.saveBook(newBook));
-            formRef.current.reset();
-            setIsbn(null);
-            setName(null);
-            setDescription(null);
-            setAuthor(null);
-            setPath(null);
-          });
+          response.json().then((result) =>{
+              dispatch(event.updateBook(isbn, result))
+          })
         }
-      })
-      .catch((response) => {
+      }).catch((response) => {
         console.log(response);
       });
   };
@@ -46,14 +41,14 @@ const CreateBook = () => {
         type="button"
         className="btn btn-primary mb-4"
         data-bs-toggle="modal"
-        data-bs-target="#createBook"
+        data-bs-target={idBotonModal}
       >
-        Agregar un nuevo libro
+        Editar
       </button>
 
       <div
         className="modal fade"
-        id="createBook"
+        id={idModal}
         data-bs-backdrop="static"
         data-bs-keyboard="false"
         tabIndex="-1"
@@ -64,7 +59,7 @@ const CreateBook = () => {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="staticBackdropLabel">
-                Ingrese los datos para el nuevo libro
+                Ingrese los nuevos datos
               </h5>
               <button
                 type="button"
@@ -74,7 +69,7 @@ const CreateBook = () => {
               ></button>
             </div>
 
-            <form ref={formRef} onSubmit={handleSubmit(onCreate)}>
+            <form onSubmit={handleSubmit(onEdit)}>
               <div className="modal-body">
                 <label htmlFor="isbn" className="form-label">
                   ISBN
@@ -83,18 +78,10 @@ const CreateBook = () => {
                   type="text"
                   className="form-control"
                   id="isbn"
+                  value={isbn}
+                  disabled
                   placeholder="Ingrese el ISBN"
-                  {...register("isbn", {
-                    required: {
-                      value: true,
-                      message: "Campo requerido",
-                    },
-                  })}
-                  onChange={(e) => {
-                    setIsbn(e.target.value);
-                  }}
                 />
-                <div className="text-danger">{errors?.isbn?.message}</div>
                 <label htmlFor="name" className="form-label">
                   Titulo
                 </label>
@@ -102,6 +89,7 @@ const CreateBook = () => {
                   type="text"
                   className="form-control"
                   id="name"
+                  value={name}
                   placeholder="Ingrese el nombre del libro"
                   {...register("name", {
                     required: {
@@ -121,6 +109,7 @@ const CreateBook = () => {
                   type="text"
                   className="form-control"
                   id="description"
+                  value={description}
                   placeholder="Ingrese una breve descripción"
                   {...register("description", {
                     required: {
@@ -142,6 +131,7 @@ const CreateBook = () => {
                   type="text"
                   className="form-control"
                   id="author"
+                  value={author}
                   placeholder="Ingrese el autor del libro"
                   {...register("author", {
                     required: {
@@ -169,6 +159,7 @@ const CreateBook = () => {
                   type="text"
                   className="form-control"
                   id="path"
+                  value={path}
                   placeholder="Ingrese la ruta del libro"
                   {...register("path", {
                     required: {
@@ -190,7 +181,11 @@ const CreateBook = () => {
                 >
                   Salir
                 </button>
-                <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  data-bs-dismiss="modal"
+                >
                   Guardar
                 </button>
               </div>
@@ -202,4 +197,4 @@ const CreateBook = () => {
   );
 };
 
-export default CreateBook;
+export default EditBook;
