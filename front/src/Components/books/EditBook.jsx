@@ -11,7 +11,7 @@ const EditBook = ({ book }) => {
   const idBotonModal = "#editBook" + book.isbn;
   const idModal = "editBook" + book.isbn;
 
-  const [isbn, setIsbn] = useState(book.isbn);
+  const isbn = useState(book.isbn);
   const [name, setName] = useState(book.name);
   const [description, setDescription] = useState(book.description);
   const [author, setAuthor] = useState(book.author);
