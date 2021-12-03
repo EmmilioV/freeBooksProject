@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.control-panel {
+  font-size: 16px;
+  color: white;
+  background-color: #424b4e70;
+  border-radius: 5px;
+  width: fit-content;
+}

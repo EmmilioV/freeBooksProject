@@ -1,10 +1,12 @@
 import React from 'react'
+import PDFReader from '../Components/toReadPDF/PDFReader'
+import '../css/estilos.css'
 
 const pdf = () => {
     return(
-        <div>
-            hola
-        </div>
+        <div className="pdfBook">
+            <PDFReader />
+        </div> 
     )
 }
 
