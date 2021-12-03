@@ -1,6 +1,6 @@
+/* eslint-disable import/no-anonymous-default-export */
 import { TYPE } from "./eventsActions";
 
-// eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
   const action = {};
 
@@ -45,6 +45,5 @@ export default () => {
     return { ...state, books: { elements: books } };
   };
   
-
   return action;
 };

@@ -1,15 +1,11 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import logo from "../../Img/book.png";
-
 
 const Navbar = () => {
 
-  const valorCookie = document.cookie.split("=")
-  const idAdmin = valorCookie[1]
-  // const users = store
+  const [isAdmin, setIsAdmin] = useState(true)
 
-  // console.log(users);
-  
+
   const deleteCookie = () => {
     let now = new Date (0); 
     let expireTime = now.getTime(); 
@@ -43,6 +39,7 @@ const Navbar = () => {
                   Inicio
                 </a>
               </li>
+              {isAdmin && 
               <li className="nav-item">
                 <a
                   className="nav-link active"
@@ -51,7 +48,7 @@ const Navbar = () => {
                 >
                   Administrar usuarios
                 </a>
-              </li>
+              </li>}
               <li className="nav-item">
                 <a
                   className="nav-link active"

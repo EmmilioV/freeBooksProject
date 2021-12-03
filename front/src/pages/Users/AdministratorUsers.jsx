@@ -35,7 +35,6 @@ const AdministratorUsers = () => {
     }
 
     ApiUser.update(idAdmin, request).then((response) =>{
-      console.log(response);
       if (response.ok) {
         response.json().then((user) =>{
           if (user.isSuccess) {
