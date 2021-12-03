@@ -1,16 +1,16 @@
 import React, { Fragment } from 'react'
+import { Link } from 'react-router-dom'
 import '../../css/estilos.css'
 import PDFReader from '../toReadPDF/PDFReader'
 
 const ReadBook = (props) => {
 
     return(
-        <Fragment>
-            <a href={`/${props.bookPath}`} target="_blank">
-                <button className="btn btn-success" onClick={PDFReader(props.bookPath)}>Leer</button>
-            </a>
-            <ReadBook bookPath={props.bookPath}/>
-        </Fragment>
+        <div className="btn btn-success">
+            <Link to={`/readbook/${props.path}`}>
+                <button className="btn btn-success">leer</button>
+            </Link>
+        </div>
     )
 }
 

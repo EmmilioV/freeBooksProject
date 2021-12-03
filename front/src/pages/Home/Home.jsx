@@ -8,6 +8,7 @@ import CreateBook from "../../Components/books/CreateBook";
 import EditBook from "../../Components/books/EditBook";
 import DeleteBook from "../../Components/books/DeleteBook";
 import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const {state: { books},dispatch} = useContext(store);
@@ -66,7 +67,7 @@ const Home = () => {
                 <td>{element.author}</td>
                 <td>{element.description}</td>
                 <td>
-                  <ReadBook bookPath={element.path}/>
+                  <ReadBook path={element.path}/>
                 </td>
                 <td>
                   {isAdmin === "true" ?
