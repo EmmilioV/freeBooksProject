@@ -16,6 +16,7 @@ const Login = () => {
           response.json().then((user) =>{
             if (user.isSuccess) {
               cookies.set("id", user.result.id, {path:"/"})
+              cookies.set("admin", user.result.admin, {path:"/"})
               window.location.href = "/home"
             }
             setAccessDenied(true)
