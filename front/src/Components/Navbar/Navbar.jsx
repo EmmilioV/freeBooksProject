@@ -1,7 +1,14 @@
 import React, { Fragment } from "react";
 import logo from "../../Img/book.png";
 
+
 const Navbar = () => {
+
+  const valorCookie = document.cookie.split("=")
+  const idAdmin = valorCookie[1]
+  // const users = store
+
+  // console.log(users);
   
   const deleteCookie = () => {
     let now = new Date (0); 

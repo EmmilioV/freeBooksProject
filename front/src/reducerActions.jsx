@@ -12,12 +12,6 @@ export default () => {
     users.push(action.user);
     return { ...state, users: { elements: users } };
   };
-  action[TYPE.USER_DELETE] = (state, action) => {
-    const users = state.users.elements.filter((element) => {
-      return element.id !== action.id;
-    });
-    return { ...state, users: { elements: users } };
-  };
   action[TYPE.USER_UPDATE] = (state, action) => {
     const users = state.users.elements.map((element) => {
       if (element.id === action.user.id) {

@@ -2,8 +2,8 @@
 const HOST_API = "http://localhost:8080/api/";
 
 export default {
-  findAll: async () => {
-    return fetch(HOST_API + "").catch((error) =>
+  findAll: async (idAdmin) => {
+    return fetch(HOST_API +idAdmin+ "/users").catch((error) =>
       console.error("Error: ", error)
     );
   },
@@ -25,20 +25,10 @@ export default {
       }
     }).catch((error) => console.error("Error:", error));
   },
-
-  update: async (id, request) => {
-    return fetch(HOST_API + id, {
+  update: async (idAdmin, request) => {
+    return fetch(HOST_API + idAdmin + "/user", {
       method: "PUT",
       body: JSON.stringify(request),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).catch((error) => console.error("Error:", error));
-  },
-
-  delete: async (id) => {
-    return fetch(HOST_API + id, {
-      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
       },

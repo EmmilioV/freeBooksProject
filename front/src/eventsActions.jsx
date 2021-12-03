@@ -2,7 +2,6 @@ export const TYPE = {
   USER_CREATE: "user.USER_CREATE",
   USER_UPDATE: "user.UPDATE_CREATE",
   USER_FIND: "user.USER_FIND",
-  USER_DELETE: "user.USER_DELETE",
   BOOK_CREATE: "book.BOOK_CREATE",
   BOOK_UPDATE: "book.UPDATE_CREATE",
   BOOK_FIND: "book.BOOK_FIND",
@@ -17,13 +16,9 @@ export default {
   saveUser: (user) => ({
     type: TYPE.USER_CREATE, user
   }),
-  deleteUser: (id) => ({
-    type: TYPE.USER_DELETE, id
-  }),
   updateUser: (id, user) => ({
     type: TYPE.USER_UPDATE, user, id
   }),
-  
   findBook: (books) => ({
     type: TYPE.BOOK_FIND, books
   }),

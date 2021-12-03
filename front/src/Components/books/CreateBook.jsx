@@ -14,7 +14,7 @@ const CreateBook = () => {
   const [author, setAuthor] = useState("");
   const [path, setPath] = useState("");
 
-  const onCreate = (even) => {
+  const onCreate = () => {
     ApiBook.save({
       isbn: isbn,
       name: name,
@@ -41,7 +41,7 @@ const CreateBook = () => {
   };
 
   return (
-    <div>
+    <Fragment>
       <button
         type="button"
         className="btn btn-primary mb-4"
@@ -198,7 +198,7 @@ const CreateBook = () => {
           </div>
         </div>
       </div>
-    </div>
+    </Fragment>
   );
 };
 
