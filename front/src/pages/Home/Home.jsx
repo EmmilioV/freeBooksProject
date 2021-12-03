@@ -3,6 +3,7 @@ import Navbar from "../../Components/Navbar/Navbar";
 import store from "../../store";
 import ApiBook from "../../Components/Api/ApiBook";
 import event from "../../eventsActions";
+import ReadBook from "../../Components/books/ReadBook"
 import CreateBook from "../../Components/books/CreateBook";
 import EditBook from "../../Components/books/EditBook";
 import DeleteBook from "../../Components/books/DeleteBook";
@@ -65,9 +66,7 @@ const Home = () => {
                 <td>{element.author}</td>
                 <td>{element.description}</td>
                 <td>
-                  <a href="/pdf" target="_blank">
-                    <button className="btn btn-success">Leer</button>
-                  </a>
+                  <ReadBook bookPath={element.path}/>
                 </td>
                 <td>
                   {isAdmin === "true" ?
@@ -87,8 +86,8 @@ const Home = () => {
                 <td>{element.author}</td>
                 <td>{element.description}</td>
                 <td>
-                  <a href="/pdf" target="_blank">
-                    <button className="btn btn-success">Leer</button>
+                  <a href={`/${element.path}`} target="_blank">
+                    <button className="btn btn-success" onClick={<ReadBook bookPath={element.path}/>}>Leer</button>
                   </a>
                 </td>
                 <td>
