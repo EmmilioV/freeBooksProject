@@ -157,29 +157,20 @@ const CreateBook = () => {
                 <label htmlFor="path" className="form-label">
                   Ruta del libro
                 </label>
-                {/* <input
-                type="file"
-                className="form-control"
-                id="path"
-                onChange={event =>{
-                  console.log(event.target.files)
-                }}
-              /> */}
                 <input
-                  type="text"
+                  type="file"
                   className="form-control"
                   id="path"
-                  placeholder="Ingrese la ruta del libro"
                   {...register("path", {
                     required: {
                       value: true,
                       message: "Campo requerido",
                     },
                   })}
-                  onChange={(e) => {
-                    setPath(e.target.value);
+                  onChange={event =>{
+                    setPath(event.target.files[0].name)
                   }}
-                />
+                /> 
                 <div className="text-danger">{errors?.path?.message}</div>
               </div>
               <div className="modal-footer">
