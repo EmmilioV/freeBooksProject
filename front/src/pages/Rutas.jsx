@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import PDFReader from "../Components/toReadPDF/PDFReader";
 import Home from "./Home/Home";
 import Login from "./Register/Login";
 import Register from "./Register/Register";
-import AdministratorUsers from "./Users/AdministratorUsers";            
-import Pdf from "./pdf";
+import AdministratorUsers from "./Users/AdministratorUsers";
 
 const Rutas = () => {
 
@@ -19,7 +19,7 @@ const Rutas = () => {
           <Route path="/users" element={<AdministratorUsers />} />
         </Routes>
         <Routes>
-          <Route exact path="/pdf" element={<Pdf />} />
+          <Route exact path="/readbook/:bookpath" element={<PDFReader />} />
         </Routes>
         <Routes>
           <Route path="/home" element={<Home />} />
