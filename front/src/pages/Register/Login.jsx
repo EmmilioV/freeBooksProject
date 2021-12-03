@@ -15,11 +15,14 @@ const Login = () => {
         if(response.ok){
           response.json().then((user) =>{
             if (user.isSuccess) {
+              setAccessDenied(false)
               cookies.set("id", user.result.id, {path:"/"})
               cookies.set("admin", user.result.admin, {path:"/"})
               window.location.href = "/home"
             }
-            setAccessDenied(true)
+            else{
+              setAccessDenied(true)
+            }
           })
         }
       })
@@ -30,7 +33,7 @@ const Login = () => {
     }
 
   return (
-    <form className="container mt-5 col-md-5" onSubmit={handleSubmit(onSubmit)} >
+    <form className="form-group container mt-5 col-md-5" onSubmit={handleSubmit(onSubmit)} >
       <div className="mb-3">
         <label htmlFor="username" className="form-label">
           Usuario
@@ -65,11 +68,13 @@ const Login = () => {
           onChange={(e) =>{setPassword(e.target.value)}}/>
         <div className="text-danger">{errors?.password?.message}</div>
       </div>
-      <a href="/register">¿Aun no estas registrado?</a>
       <div className="container text-center">
         <button type="submit" className="btn btn-primary">
           Iniciar sesión
         </button>
+      </div>
+      <div className="text-center">
+        <a href="/register">¿Aun no estas registrado?</a>
       </div>
       {accessDenied === true && <h5 className="text-center mt-4 text-danger">Usuario o contraseña invalido</h5>} 
     </form>

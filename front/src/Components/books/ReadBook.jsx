@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import '../../css/estilos.css'
-import PDFReader from '../toReadPDF/PDFReader'
 
 const ReadBook = (props) => {
 
