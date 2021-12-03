@@ -3,12 +3,15 @@ import ApiBook from "../Api/ApiBook";
 import store from "../../store";
 import event from "../../eventsActions";
 
+//Es el boton de borrar libros
 const DeleteBook = ({isbn}) => {
 
   const { dispatch } = useContext(store);
+  //Crea variables para crear diferentes modales y que no haya errores
   const idBotonModal = "#deleteBook" + isbn;
   const idModal = "deleteBook" + isbn;
 
+  //Elimina el libro
     const onDelete = () => {
       ApiBook.delete(isbn).then((response) => {
         if(response.ok) {

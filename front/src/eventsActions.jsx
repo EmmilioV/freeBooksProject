@@ -1,3 +1,4 @@
+//Son los tipos de acciones
 export const TYPE = {
   USER_CREATE: "user.USER_CREATE",
   USER_UPDATE: "user.UPDATE_CREATE",
@@ -8,7 +9,7 @@ export const TYPE = {
   BOOK_DELETE: "book.BOOK_DELETE",
 };
 
-// eslint-disable-next-line import/no-anonymous-default-export
+//Son las acciones que puede ejecutar el reducer
 export default {
   findUser: (users) => ({
     type: TYPE.USER_FIND, users

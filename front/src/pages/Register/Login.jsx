@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import ApiUser from "../../Components/Api/ApiUser";
 import Cookies from "universal-cookie"
 
+//Es para el ingreso a la aplicacion
 const Login = () => {
     const {register, handleSubmit, formState: { errors }} = useForm();
     const [username, setUsername] = useState()
@@ -10,12 +11,14 @@ const Login = () => {
     const cookies = new Cookies()
     const [accessDenied, setAccessDenied] = useState(false) 
 
+    //Envia peticion al back para saber si es un usuario registrado
     const onSubmit = () =>{
       ApiUser.login({username:username, password:password}).then((response)=>{
         if(response.ok){
           response.json().then((user) =>{
             if (user.isSuccess) {
               setAccessDenied(false)
+              //Almacena en cookies el id del usuario y si es administrador segun la respuesta del backend
               cookies.set("id", user.result.id, {path:"/"})
               cookies.set("admin", user.result.admin, {path:"/"})
               window.location.href = "/home"

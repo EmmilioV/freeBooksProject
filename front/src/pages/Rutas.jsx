@@ -7,6 +7,7 @@ import AdministratorUsers from "./Users/AdministratorUsers";
 
 const Rutas = () => {
 
+  //Contiene las diferentes rutas a las que se puden acceder
   return (
       <Router>
         <Routes>

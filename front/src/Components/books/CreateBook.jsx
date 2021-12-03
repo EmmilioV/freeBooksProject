@@ -4,6 +4,7 @@ import ApiBook from "../Api/ApiBook";
 import store from "../../store";
 import event from "../../eventsActions";
 
+//Es el boton de crear libros
 const CreateBook = () => {
   const {register, handleSubmit, formState: { errors }} = useForm();
   const formRef = useRef(null);
@@ -14,6 +15,7 @@ const CreateBook = () => {
   const [author, setAuthor] = useState("");
   const [path, setPath] = useState("");
 
+  //Crea el nuevo libro
   const onCreate = () => {
     ApiBook.save({
       isbn: isbn,

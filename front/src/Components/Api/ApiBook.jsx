@@ -1,7 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
-
 const HOST_API = "http://localhost:8080/api/";
 
+//Son los métodos fetch para el libro
 export default {
   findAll: async () => {
     return fetch(HOST_API + "books").catch((error) =>

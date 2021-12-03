@@ -9,12 +9,17 @@ import EditBook from "../../Components/books/EditBook";
 import DeleteBook from "../../Components/books/DeleteBook";
 import Cookies from "js-cookie";
 
+//Muestra los libros
 const Home = () => {
   const {state: { books},dispatch} = useContext(store);
   const listBooks = books.elements;
   const isAdmin = Cookies.get("admin");
+  const idUser = Cookies.get("id");
   const [bookSearch, setBookSearch] = useState("")
 
+  console.log(idUser);
+
+  //Hace el llamados de los libros para mostrarlos
   useEffect(() => {
     ApiBook.findAll()
       .then((response) => {
@@ -29,6 +34,7 @@ const Home = () => {
       });
   }, [dispatch]);
 
+  //Asigna una busqueda a la variable para mostrar en pantalla
   const onSearch = (book, event) =>{
     if(event.target.value !== ""){
       setBookSearch(book)
@@ -37,11 +43,16 @@ const Home = () => {
     setBookSearch("")
   }
 
+  //Valida que si esta logeado se muestre la información
+
   return (
     <Fragment>
-      <Navbar onSearch={onSearch}/>
+      {idUser ?
+      <div>
+        <Navbar onSearch={onSearch}/>
       <div className="container mt-4">
 
+{/* Valida si es admin para mostrar los botones de modificacion */}
         {isAdmin === "true" ?
         <CreateBook />: <div></div>}
 
@@ -58,6 +69,7 @@ const Home = () => {
             </tr>
           </thead>
           <tbody>
+            {/* Valida si hay algo de la variable de busqueda para mostrar el resultado */}
             {bookSearch.length === 0 ?
             listBooks.map((element) => (
               <tr key={element.isbn} id={element.isbn}>
@@ -103,6 +115,8 @@ const Home = () => {
           </tbody>
         </table>
       </div>
+      </div>: <h1>No se ha logeado</h1>
+      }
     </Fragment>
   );
 };

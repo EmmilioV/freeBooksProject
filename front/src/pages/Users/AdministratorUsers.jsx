@@ -5,6 +5,7 @@ import ApiUser from "../../Components/Api/ApiUser";
 import event from "../../eventsActions";
 import Cookies from "js-cookie";
 
+//Se encarga de la administracion de los usuarios
 const AdministratorUsers = () => {
   const {
     state: { users },
@@ -15,7 +16,7 @@ const AdministratorUsers = () => {
   const idAdmin = Cookies.get("id");
   const isAdmin = Cookies.get("admin");
   
-  console.log(isAdmin);
+  //Es el método get de los usuarios para mostrarlos
   useEffect(() => {
     ApiUser.findAll(idAdmin)
       .then((response) => {
@@ -32,6 +33,7 @@ const AdministratorUsers = () => {
       });
   }, [dispatch]);
 
+  //Modifica los permisos de administración del usuario
   const onEdit = (even, user) => {
     user.admin = even.target.checked;
     const request = {
@@ -56,6 +58,7 @@ const AdministratorUsers = () => {
       });
   };
 
+  //Imprime la pagina validando si es admin
   return (
     <Fragment>
       {isAdmin === "true" ?
