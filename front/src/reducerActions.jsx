@@ -1,6 +1,6 @@
-/* eslint-disable import/no-anonymous-default-export */
 import { TYPE } from "./eventsActions";
 
+//Retorna las diferentes acciones que puede ejecutar el reducer
 export default () => {
   const action = {};
 

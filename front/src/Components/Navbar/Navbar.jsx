@@ -3,11 +3,13 @@ import logo from "../../Img/book.png";
 import Cookies from "js-cookie";
 import ApiBook from "../Api/ApiBook";
 
+//Es la barra de navegación
 const Navbar = (props) => {
 
   const [nameBook, setNameBook] = useState("")
   const isAdmin = Cookies.get("admin");
 
+  //Hace la consulta del libro al escribir en la barra de busqueda y envia los datos al home
   const search = (event) => {
     setNameBook(event.target.value)
     ApiBook.findByCriteria(nameBook).then((response) =>{
@@ -19,6 +21,7 @@ const Navbar = (props) => {
     })
   }
 
+  //Elimina los cookies del usuario cargados en el login al darle en Salir
   const deleteCookie = () => {
     let now = new Date (0); 
     let expireTime = now.getTime(); 
@@ -53,6 +56,7 @@ const Navbar = (props) => {
                   Inicio
                 </a>
               </li>
+              {/* Valida si es admin para mostrar el boton de administracion de usuarios */}
               {isAdmin === "true" ? 
               <li className="nav-item">
                 <a

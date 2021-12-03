@@ -1,6 +1,7 @@
 /* eslint-disable import/no-anonymous-default-export */
 const HOST_API = "http://localhost:8080/api/";
 
+//Son los metodos fetch para los usuarios
 export default {
   findAll: async (idAdmin) => {
     return fetch(HOST_API +idAdmin+ "/users").catch((error) =>

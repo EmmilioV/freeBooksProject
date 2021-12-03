@@ -1,6 +1,7 @@
 import React, { useReducer, createContext } from "react";
 import reducerActions from "./reducerActions";
 
+//Inicializa elementos de users y books
 const initialState = {
   users: {
     elements:[]
@@ -12,6 +13,7 @@ const initialState = {
 
 const store = createContext(initialState);
 
+//Devuelve el objeto reducer de la importación reducerActions
 function reducer(state, action) {
   console.log("dispatch => ", action.type);
   return reducerActions()[action.type]
@@ -19,6 +21,7 @@ function reducer(state, action) {
     : state;
 }
 
+//Nos permite conectar los diferentes componentes indicandondole al reducer que realizar  
 export const StoreProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   return (

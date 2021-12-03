@@ -6,6 +6,7 @@ import store from "../../store";
 import event from "../../eventsActions";
 import ApiUser from "../../Components/Api/ApiUser";
 
+//Registrar nuevos usuarios
 const Register = () => {
   const {register, handleSubmit, formState: { errors }} = useForm();
   const {dispatch} = useContext(store);
@@ -14,8 +15,8 @@ const Register = () => {
   const [nameDenied, setNameDenied] = useState(false);
   const [success, setSuccess] = useState(false);
 
+  //Almacena el nuevo usuario validando que no exista y redirije al login
   const saveNewUser = (even) => {
-
       ApiUser.save({username:username, password:password}).then((response) => {
         response.json().then((result) => {
           dispatch(event.saveUser(result));

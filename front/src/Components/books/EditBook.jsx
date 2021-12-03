@@ -5,9 +5,11 @@ import ApiBook from "../../Components/Api/ApiBook";
 import event from "../../eventsActions";
 import { useForm } from "react-hook-form";
 
+//Es el boton de editar libros
 const EditBook = ({ book }) => {
   const { dispatch } = useContext(store);
   const {register, handleSubmit, formState: { errors }} = useForm();
+  //Crea variables para crear diferentes modales y que no haya errores
   const idBotonModal = "#editBook" + book.isbn;
   const idModal = "editBook" + book.isbn;
 
@@ -17,6 +19,7 @@ const EditBook = ({ book }) => {
   const [author, setAuthor] = useState(book.author);
   const [path, setPath] = useState(book.path);
 
+  //Edita el libro
   const onEdit = () => {
     ApiBook.update(isbn, {
       isbn: isbn,
@@ -147,14 +150,6 @@ const EditBook = ({ book }) => {
                 <label htmlFor="path" className="form-label">
                   Ruta del libro
                 </label>
-                {/* <input
-                type="file"
-                className="form-control"
-                id="path"
-                onChange={event =>{
-                  console.log(event.target.files)
-                }}
-              /> */}
                 <input
                   type="text"
                   className="form-control"
